@@ -21,9 +21,9 @@ void IMC(){
 void sumOfDigits(){
     printf("SUMA DE DIGITOS");
 }
-char *fibonacci(int n, char *x) {
-    n == 1 || n == 0 ? n == 1 ? strcat(x, "1") : strcat(x, "0") : *fibonacci(n - 1, x) +*fibonacci(n - 2, x);
-    return x;
+char *fibonacci(int number, char *chain) {
+    number == 1 || number == 0 ? number == 1 ? strcat(chain, "1") : strcat(chain, "0") : *fibonacci(number - 1, chain) +*fibonacci(number - 2, chain);
+    return chain;
 }
 void testString(){
     printf("PRUEBA CADENA ");
@@ -50,7 +50,7 @@ void mainMenu(){
         printf( mainMenu );
         long number;
         int isBits = 0, isBits2 = 0, cont = 0;
-        char *aux, cnumber[100], x[1000][1000]={""},pattern[100]="";
+        char *aux, cnumber[100], fchain[1000][1000]={""},pattern[100]="";
         scanf("%c",&option);
         fflush(stdin);
         switch(option){
@@ -117,10 +117,10 @@ void mainMenu(){
                                            ? 1 : 0;
                             }
                             if (isBits == strlen(pattern) && isBits2 == 0) {
-                                int a = strlen(fibonacci(number, x));
+                                int a = strlen(fibonacci(number, fchain));
                                 int b = strlen(pattern);
                                 char buffer[100] = "";
-                                char *chain = fibonacci(number, x);
+                                char *chain = fibonacci(number, fchain);
                                 for (int i = 0; i < a; i++) {
                                     if (i * b + b <= a && strcmp(strncpy(buffer, &chain[i * b], b), pattern) == 0) {
                                         cont++;
