@@ -18,9 +18,51 @@ void IMC(){
     printf("INDICE DE MASA CORPORAL");
 
 }
-void sumOfDigits(){
-    printf("SUMA DE DIGITOS");
+
+//// Suma de Digitos
+int sumNoExcl,sumNumExc;
+
+int processDigiExcl(int less,int higher,int exclude,int *sumNoExcl,int *sumNumExc){
+    int num=0,digito=0,contExc=0,suma=0;
+    
+    for(int i=less;i<=higher;i++){    
+        num = i;
+        while(num != 0){
+            digito = num%10;
+            num = num / 10;
+            
+            if(digito == exclude){
+                contExc++;
+            }else{
+                suma += digito;
+            }
+        }
+    }
+    *sumNumExc = contExc;
+    *sumNoExcl = suma;
+ return 0;
 }
+
+void readDigits(){
+    int lessNumber,higherNumber,excludeNumber;
+    printf("\n----------->  Digitos Excluidos\n");
+    printf("\nIngrese el MENOR numero del rango: ");
+    scanf("%i",&lessNumber);
+    printf("\nIngrese el MAYOR numero del rango: ");
+    scanf("%i",&higherNumber);
+    printf("\nIngrese el Digito a EXCLUIR del rango: ");
+    scanf("%i",&excludeNumber);
+    
+    if(lessNumber >= higherNumber){
+        printf("\nERROR!!!... No ingreso los datos solicitados... Intentelo de Nuevo\n");
+    }else{
+      processDigiExcl(lessNumber,higherNumber,excludeNumber,&sumNoExcl,&sumNumExc);
+      printf("\nRango de Numeros [%i - %i]\t Digito A Excluir (%i)\nSuma Digitos NO EXCLUIDOS: %i, Cantidad Digitos EXCLUIDOS: %i\n",lessNumber,higherNumber,excludeNumber,sumNoExcl,sumNumExc);
+     } 
+    getchar();
+}
+/////////
+
 char *fibonacci(int number, char *chain) {
     number == 1 || number == 0 ? number == 1 ? strcat(chain, "1") : strcat(chain, "0") : *fibonacci(number - 1, chain) +*fibonacci(number - 2, chain);
     return chain;
@@ -87,7 +129,7 @@ void mainMenu(){
                 break;
 
             case '5' :
-                sumOfDigits();
+                readDigits();
                 stop();
                 break;
 
