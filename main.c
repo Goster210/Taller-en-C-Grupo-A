@@ -14,10 +14,120 @@ int egomaniac(int number, int sum, int size) {
 void magicNumber(){
     printf("NUMERO MAGICO");
 }
-void IMC(){
-    printf("INDICE DE MASA CORPORAL");
-
+/////////////////////////RUN  IMC/////////////////
+char* maleIMC(double weight,double height,double imc){
+    if (imc < 17 ){
+        return ("Desnutricion");
+    }
+    if (imc > 17 &&  imc <= 20){
+        return ("Bajo Peso");
+    }
+    if (imc > 20 &&  imc <= 25){
+        return ("Normal");
+    }
+    if (imc > 25 &&  imc <= 30 ){
+        return ("Sobrepeso");
+    }
+    if (imc > 30 &&  imc <= 35 ){
+        return ("Obesidad");
+    }
+    if (imc > 35 &&  imc <= 40 ){
+        return ("Obesidad Marcada");
+    }
+    if (imc > 40 ){
+        return ("Obesidad Morbida");
+    }
+    return "Error";
 }
+char* femaleIMC(double weight,double height,double imc){
+    if (imc < 16 ){
+        return ("Desnutricion");
+    }
+    if (imc > 16 &&  imc <= 20){
+        return ("Bajo Peso");
+    }
+    if (imc > 20 &&  imc <= 24){
+        return ("Normal");
+    }
+    if (imc > 24 &&  imc <= 29 ){
+        return ("Sobrepeso");
+    }
+    if (imc > 29 &&  imc <= 34 ){
+        return ("Obesidad");
+    }
+    if (imc > 34 &&  imc <= 39 ){
+        return ("Obesidad Marcada");
+    }
+    if (imc > 39 ){
+        return ("Obesidad Morbida");
+    }
+    return "Error";
+}
+int validateIMC(char num[]){
+    for (int i = 0; i < strlen(num); i++){
+        if(!isdigit(num[i]) ) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void IMC(){
+
+   printf("\n\n------------------- INICIO INDICE DE MASA CORPORAL (IMC) ---------------------\n\n");
+   double imc;
+   char weight[10],height[10],gender;
+    printf("-------------- [INDICE DE MASA CORPORAL] --------------\n"
+           "\n¿CUAL ES TU GENERO?"
+           "\nOPCIONES:  (digita el numero 1 o el numero 2 segun tu opcion)"
+           "\n1)  Masculino"
+           "\n2)  Femenino\n");
+    getchar();
+    scanf("%c",&gender);
+if (gender == '1' || gender == '2') {
+    printf("DIGITA TU PESO en (kilogramos)\n");
+    scanf("%s", &weight);
+    if (validateIMC(weight)==1){
+        printf("DIGITA TU ALTURA en (centimetros)\n");
+        scanf("%s", &height);
+        if (validateIMC(height)==1) {
+            double newWeight = atof(weight);
+            double newHeight = atof(height);
+            imc = (newWeight) / (pow((newHeight/ 100), 2));
+            switch (gender) {
+                case '1' :
+                    printf("\n--------DATOS DEL ANALISIS--------"
+                           "\nGenero: MASCULINO "
+                           "\nPeso: %lf kg"
+                           "\nAltura: %lf cm"
+                           "\nCALCULO IMC: %lf"
+                           "\nESTADO SENGUN IMC: %s\n", newWeight, newHeight,imc,maleIMC(newWeight, newHeight, imc));
+                    break;
+                case '2' :
+                    printf("\n--------DATOS DEL ANALISIS--------"
+                           "\nGenero: FEMENINO "
+                           "\nPeso: %lf kg"
+                           "\nAltura: %lf cm"
+                           "\nCALCULO IMC: %lf"
+                           "\nESTADO SENGUN IMC: %s\n", newWeight, newHeight,imc,femaleIMC(newWeight, newHeight, imc));
+                    break;
+
+            }
+        } else{
+            printf("OPCION NO VALIDA --> HAS DIGITADO UNA ALTURA ERRONEA\n");
+        }
+
+    } else{
+        printf("OPCION NO VALIDA --> HAS DIGITADO UN PESO ERRONEO\n");
+    }
+
+} else {
+    printf("OPCION NO VALIDA --> EL MENU SOLO PERMITE la opcion 1 o 2\n");
+}
+    printf("-----------------------------------------------\n"
+           "\n-------------------  FIN INDICE DE MASA CORPORAL (IMC) ---------------------\n\n");
+}
+/////////////////////////END  IMC/////////////////
 
 //// Suma de Digitos
 int sumNoExcl,sumNumExc;
