@@ -130,7 +130,6 @@ if (gender == '1' || gender == '2') {
 /////////////////////////END  IMC/////////////////
 
 //// Suma de Digitos
-int sumNoExcl,sumNumExc;
 
 int processDigiExcl(int less,int higher,int exclude,int *sumNoExcl,int *sumNumExc){
     int num=0,digito=0,contExc=0,suma=0;
@@ -155,6 +154,8 @@ int processDigiExcl(int less,int higher,int exclude,int *sumNoExcl,int *sumNumEx
 
 void readDigits(){
     int lessNumber,higherNumber,excludeNumber;
+    int sumNoExcl,sumNumExc;
+    
     printf("\n----------->  Digitos Excluidos\n");
     printf("\nIngrese el MENOR numero del rango: ");
     scanf("%i",&lessNumber);
