@@ -129,8 +129,116 @@ if (gender == '1' || gender == '2') {
 }
 /////////////////////////END  IMC/////////////////
 
-//// Suma de Digitos
+//////// Puntos 3 y 5
 
+//Validacion Ingreso de solo numeros
+int validateNumbers(char number[]){
+    int i;
+    for(i=0; i<strlen(number); i++)
+    {
+        if(!(isdigit(number[i])))
+        {
+            printf("\nError!!!, Ingrese solo Numeros\nVuelva a Intentarlo\n");
+            getchar();
+            return 0;
+        }
+    }
+    return 1;
+}
+
+//Inicio punto 3
+int ascenOrder(int digits[], int size){
+    int auxOrder,numberAscen = 0,aux = 0;
+
+      for(int i=0;i<size;i++){
+        for(int j=0;j<size-1;j++){
+          for(int j=0;j<size-1;j++){
+             if(digits[j]>digits[j+1]){
+                auxOrder=digits[j];
+                digits[j]=digits[j+1];
+                digits[j+1]=auxOrder;
+             }
+         }
+       } 
+     }
+
+    for (int i = 0;i < size; i++){
+    aux = digits[i];
+    
+    if (aux != 0){
+      while (aux > 0){
+        numberAscen *= 10;
+        aux /= 10;
+      }
+      numberAscen += digits[i];
+    }else{
+      numberAscen *= 10;
+    }
+  }
+    return numberAscen;
+}
+
+int descenOrder(int digits[], int size){
+  int auxOrder,numberDescen = 0,aux = 0;
+  
+      for(int i=0;i<size;i++){
+        for(int j=0;j<size-1;j++){
+          for(int j=0;j<size-1;j++){
+             if(digits[j]<digits[j+1]){
+                auxOrder=digits[j];
+                digits[j]=digits[j+1];
+                digits[j+1]=auxOrder;
+             }
+         }
+       } 
+     }
+
+
+    for (int i = 0;i < size; i++){
+    aux = digits[i];
+    
+    if (aux != 0){
+      while (aux > 0){
+        numberDescen *= 10;
+        aux /= 10;
+      }
+      numberDescen += digits[i];
+    }else{
+      numberDescen *= 10;
+    }
+  }
+    return numberDescen;
+}
+
+void magicNumber(){
+    int number,originalNumber;
+    char validate[5];
+
+    printf("\n----------->  Numero Magico \n");
+    do{
+    printf("\nIngrese el numero: " );
+    scanf("%s",validate);
+    number=validateNumbers(validate);
+    }while(number == 0);
+    
+    if(number !=0 ){
+        originalNumber = atoi(validate);
+        int digits[10],aux=0,size,temp=originalNumber;
+        while(temp!=0){
+            digits[aux] = temp%10;
+            temp = temp/10;
+            aux++;
+        }
+        size = aux;
+        if( (descenOrder(digits,size) - ascenOrder(digits,size)) == originalNumber){
+            printf("El numero %i SI es Magico\n",originalNumber);
+        }else{
+            printf("El numero %i NO es Magico\n",originalNumber);
+        }
+    } 
+}
+//Fin Punto 3
+//Inicio Punto 5
 int processDigiExcl(int less,int higher,int exclude,int *sumNoExcl,int *sumNumExc){
     int num=0,digito=0,contExc=0,suma=0;
     
@@ -153,25 +261,47 @@ int processDigiExcl(int less,int higher,int exclude,int *sumNoExcl,int *sumNumEx
 }
 
 void readDigits(){
-    int lessNumber,higherNumber,excludeNumber;
+    int lessVal,highVal,exclVal;
+    char validLess[5],validHigher[5],validExcl[5];
+
+    printf("\n----------->  Digitos Excluidos\n");
+    do{
+    printf("\nIngrese el MENOR numero del rango: ");
+    scanf("%s",&validLess);
+    lessVal = validateNumbers(validLess);
+    }while(lessVal == 0);
+    
+    do{
+    printf("\nIngrese el MAYOR numero del rango: ");
+    scanf("%s",&validHigher);
+    highVal = validateNumbers(validHigher);
+    }while(highVal == 0);
+    
+    do{
+    printf("\nIngrese el Digito a EXCLUIR del rango: ");
+    scanf("%s",&validExcl);
+    exclVal = validateNumbers(validExcl);
+    }while(exclVal == 0);
+
+    
+    if(lessVal!=0 && highVal!=0 && exclVal!=0){
+    
+    int lessNumber = atoi(validLess), higherNumber = atoi(validHigher), excludeNumber = atoi(validExcl);
     int sumNoExcl,sumNumExc;
     
-    printf("\n----------->  Digitos Excluidos\n");
-    printf("\nIngrese el MENOR numero del rango: ");
-    scanf("%i",&lessNumber);
-    printf("\nIngrese el MAYOR numero del rango: ");
-    scanf("%i",&higherNumber);
-    printf("\nIngrese el Digito a EXCLUIR del rango: ");
-    scanf("%i",&excludeNumber);
+        if(lessNumber >= higherNumber){
+        printf("\nERROR!!!... El Nº Menor es Mayor o Igual, que el Mayor del Rango: (%i >= %i)\n",lessNumber,higherNumber);
+        }else{
+        processDigiExcl(lessNumber,higherNumber,excludeNumber,&sumNoExcl,&sumNumExc);
+        printf("\nRango de Numeros [%i - %i]\t Digito A Excluir (%i)\nSuma Digitos NO EXCLUIDOS: %i, Cantidad Digitos EXCLUIDOS: %i\n",lessNumber,higherNumber,excludeNumber,sumNoExcl,sumNumExc);
+        }  
+    }
     
-    if(lessNumber >= higherNumber){
-        printf("\nERROR!!!... No ingreso los datos solicitados... Intentelo de Nuevo\n");
-    }else{
-      processDigiExcl(lessNumber,higherNumber,excludeNumber,&sumNoExcl,&sumNumExc);
-      printf("\nRango de Numeros [%i - %i]\t Digito A Excluir (%i)\nSuma Digitos NO EXCLUIDOS: %i, Cantidad Digitos EXCLUIDOS: %i\n",lessNumber,higherNumber,excludeNumber,sumNoExcl,sumNumExc);
-     } 
+    getchar();
 }
-/////////
+//Fin Punto 5
+
+//// Fin Puntos 3 y 5
 
 char *fibonacci(int number, char *chain) {
     number == 1 || number == 0 ? number == 1 ? strcat(chain, "1") : strcat(chain, "0") : *fibonacci(number - 1, chain) +*fibonacci(number - 2, chain);
