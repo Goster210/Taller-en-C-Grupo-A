@@ -11,9 +11,7 @@ int egomaniac(int number, int sum, int size) {
     sum += pow(number % 10, size);
     return number > 0 ? egomaniac(number / 10, sum, size) : sum;
 }
-void magicNumber(){
-    printf("NUMERO MAGICO");
-}
+
 /////////////////////////RUN  IMC/////////////////
 char* maleIMC(double weight,double height,double imc){
     if (imc < 17 ){
