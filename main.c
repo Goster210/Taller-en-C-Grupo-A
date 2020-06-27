@@ -141,12 +141,9 @@ void IMC(){
 //////// Puntos 3 y 5
 
 //Validacion Ingreso de solo numeros
-int validateNumbers(char number[]){
-    int i;
-    for(i=0; i<strlen(number); i++)
-    {
-        if(!(isdigit(number[i])))
-        {
+int validateNumbers(char option[]){
+    for(int i=0; i<strlen(option); i++){
+        if(!isdigit(option[i])){
             printf("\nError!!!, Ingrese solo Numeros\nVuelva a Intentarlo\n");
             getchar();
             return 0;
@@ -305,8 +302,6 @@ void readDigits(){
         printf("\nRango de Numeros [%i - %i]\t Digito A Excluir (%i)\nSuma Digitos NO EXCLUIDOS: %i, Cantidad Digitos EXCLUIDOS: %i\n",lessNumber,higherNumber,excludeNumber,sumNoExcl,sumNumExc);
         }  
     }
-    
-    getchar();
 }
 //Fin Punto 5
 
