@@ -11,7 +11,6 @@ int egomaniac(int number, int sum, int size) {
     sum += pow(number % 10, size);
     return number > 0 ? egomaniac(number / 10, sum, size) : sum;
 }
-
 /////////////////////////RUN  IMC/////////////////
 char* maleIMC(double weight,double height,double imc){
     if (imc < 17 ){
@@ -62,8 +61,21 @@ char* femaleIMC(double weight,double height,double imc){
     return "Error";
 }
 int validateIMC(char num[]){
-    for (int i = 0; i < strlen(num); i++){
-        if(!isdigit(num[i]) ) {
+    int i = 0,j = 0;
+    char caracter[1]=".";
+    char resultante[100];
+    while (num[i] != '\0')
+    {
+        if (caracter[0] != num[i])
+        {
+            resultante[j] = num[i];
+            j++;
+        }
+        i++;
+    }
+
+    for (int a = 0; a < strlen(resultante); a++){
+        if(!isdigit(resultante[a]) ) {
             return 0;
         }
     }
@@ -71,62 +83,61 @@ int validateIMC(char num[]){
 }
 
 void IMC(){
-
-   printf("\n\n------------------- INICIO INDICE DE MASA CORPORAL (IMC) ---------------------\n\n");
-   double imc;
-   char weight[10],height[10],gender;
+    printf("\n\n------------------- INICIO INDICE DE MASA CORPORAL (IMC) ---------------------\n\n");
+    double imc;
+    char weight[10],height[10],gender[10];
     printf("-------------- [INDICE DE MASA CORPORAL] --------------\n"
            "\n¿CUAL ES TU GENERO?"
            "\nOPCIONES:  (digita el numero 1 o el numero 2 segun tu opcion)"
            "\n1)  Masculino"
            "\n2)  Femenino\n");
     getchar();
-    scanf("%c",&gender);
-if (gender == '1' || gender == '2') {
-    printf("DIGITA TU PESO en (kilogramos)\n");
-    scanf("%s", &weight);
-    if (validateIMC(weight)==1){
-        printf("DIGITA TU ALTURA en (centimetros)\n");
-        scanf("%s", &height);
-        if (validateIMC(height)==1) {
-            double newWeight = atof(weight);
-            double newHeight = atof(height);
-            imc = (newWeight) / (pow((newHeight/ 100), 2));
-            switch (gender) {
-                case '1' :
-                    printf("\n--------DATOS DEL ANALISIS--------"
-                           "\nGenero: MASCULINO "
-                           "\nPeso: %lf kg"
-                           "\nAltura: %lf cm"
-                           "\nCALCULO IMC: %lf"
-                           "\nESTADO SENGUN IMC: %s\n", newWeight, newHeight,imc,maleIMC(newWeight, newHeight, imc));
-                    break;
-                case '2' :
-                    printf("\n--------DATOS DEL ANALISIS--------"
-                           "\nGenero: FEMENINO "
-                           "\nPeso: %lf kg"
-                           "\nAltura: %lf cm"
-                           "\nCALCULO IMC: %lf"
-                           "\nESTADO SENGUN IMC: %s\n", newWeight, newHeight,imc,femaleIMC(newWeight, newHeight, imc));
-                    break;
-
+    scanf("%s",&gender);
+    if (strcmp(gender,"1")==0|| strcmp(gender,"2")==0) {
+        printf("DIGITA TU PESO en (kilogramos)\n"
+               "[SI VAS AGREGAR DECIMALES USA (.) PARA HACERLO]\n"
+               "[EL CARACTER (,) NO SIRVE]\n");
+        scanf("%s", &weight);
+        if (validateIMC(weight)==1){
+            printf("DIGITA TU ALTURA en (centimetros)\n");
+            scanf("%s", &height);
+            if (validateIMC(height)==1) {
+                double newWeight = atof(weight);
+                double newHeight = atof(height);
+                int newGender = atof(gender);
+                imc = (newWeight) / (pow((newHeight/ 100), 2));
+                switch (newGender) {
+                    case 1 :
+                        printf("\n--------DATOS DEL ANALISIS--------"
+                               "\nGenero: MASCULINO "
+                               "\nPeso: %lf kg"
+                               "\nAltura: %lf cm"
+                               "\nCALCULO IMC: %lf"
+                               "\nESTADO SENGUN IMC: %s\n", newWeight, newHeight,imc,maleIMC(newWeight, newHeight, imc));
+                        break;
+                    case 2 :
+                        printf("\n--------DATOS DEL ANALISIS--------"
+                               "\nGenero: FEMENINO "
+                               "\nPeso: %lf kg"
+                               "\nAltura: %lf cm"
+                               "\nCALCULO IMC: %lf"
+                               "\nESTADO SENGUN IMC: %s\n", newWeight, newHeight,imc,femaleIMC(newWeight, newHeight, imc));
+                        break;
+                }
+            } else{
+                printf("OPCION NO VALIDA --> HAS DIGITADO UNA ALTURA ERRONEA\n");
             }
+
         } else{
-            printf("OPCION NO VALIDA --> HAS DIGITADO UNA ALTURA ERRONEA\n");
+            printf("OPCION NO VALIDA --> HAS DIGITADO UN PESO ERRONEO\n");
         }
-
-    } else{
-        printf("OPCION NO VALIDA --> HAS DIGITADO UN PESO ERRONEO\n");
+    } else {
+        printf("OPCION NO VALIDA --> EL MENU SOLO PERMITE la opcion 1 o 2\n");
     }
-
-} else {
-    printf("OPCION NO VALIDA --> EL MENU SOLO PERMITE la opcion 1 o 2\n");
-}
-    printf("-----------------------------------------------\n"
+    printf("------------------------------------------------------\n"
            "\n-------------------  FIN INDICE DE MASA CORPORAL (IMC) ---------------------\n\n");
 }
 /////////////////////////END  IMC/////////////////
-
 //////// Puntos 3 y 5
 
 //Validacion Ingreso de solo numeros
