@@ -382,7 +382,9 @@ void mainMenu(){
                      "5. Suma de digitos\n"
                      "6. Serie de Fibonnaci\n"
                      "7. Test Cadena\n\n"
-                     "8. SALIR\n\n";
+                     "8. SALIR\n\n"
+                     "Digite una opcion del menu: ";
+
     do{
         printf( mainMenu );
         long number;
