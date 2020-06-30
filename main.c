@@ -372,6 +372,7 @@ void stop()
 }
 
 void mainMenu(){
+    int exit = 1;
     char option[10];
     char *mainMenu = "\n<<<<MENU PRINCIPAL>>>>\n\n"
                      "1. Numero Primo\n"
@@ -499,14 +500,14 @@ void mainMenu(){
             stop();
         }
         else if (strcmp(option,"8")==0){
-            exit (0);
+            exit = 0;
         } else{
             printf("INVALIDO --> ESCOGISTE UNA OPCION QUE NO ESTA EN EL MENU");
             stop();
         }
 
 
-    }while( 9!=10 );
+    }while( exit != 0 );
 }
 
 int main() {
