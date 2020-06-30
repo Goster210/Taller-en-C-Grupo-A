@@ -346,20 +346,20 @@ int testString(char cadena[]){
 }
 
 void sumaCadena(char cadena[]){
-    int suma=0; 
+    int suma=0;
     int auxi=0;
-    for(int i; i<strlen(cadena); i++){
+    for(int i=0; i<=strlen(cadena); i++){
 
         if(cadena[i]=='O' || cadena[i]=='o'){
 
             suma++;
+            auxi+=suma;
 
-        }else{
+        }else if(cadena[i]=='X' || cadena[i]=='x'){
 
             suma=0;
 
         }
-        auxi=suma+auxi;
     }
     printf("\nLa nota del estudiante es: %d \n",auxi);
 }
@@ -488,8 +488,7 @@ void mainMenu(){
             char cadena[50];
       printf("PRUEBA CADENA ");  
                 printf("Digite X y O para mostrar la nota correspondiente");
-                fgets(cadena,50, stdin);
-                fflush(stdin);
+                scanf("%s", cadena);
 
                 if(testString(cadena)!=0){
 
