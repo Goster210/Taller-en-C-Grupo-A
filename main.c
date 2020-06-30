@@ -327,7 +327,7 @@ char *fibonacci(int number, char *chain) {
     return chain;
 }
 
-voidint testString(char cadena[]){
+int testString(char cadena[]){
     int auxi=0;
     for (int i=0 ; i<strlen(cadena)-1; i++){
 
@@ -391,20 +391,17 @@ void mainMenu(){
         fflush(stdin);
 
         if (strcmp(option,"1")==0){
-                  char cadena[50];
-      printf("PRUEBA CADENA ");  
-                printf("Digite X y O para mostrar la nota correspondiente");
-                fgets(cadena,50, stdin);
-                fflush(stdin);
-
-                if(testString(cadena)!=0){
-
-                    printf("Error Solo deve de digitar O y X en mayuscula\n");
-
-                }else{
-
-                    sumaCadena(cadena);
+                  
+            int numP1;
+                printf("Digite el numero limite !\n");
+                scanf("%i", &numP1);
+                if (numP1>0){
+                    primeNumbers(numP1);
                 }
+                else{
+                    printf("Error tiene que Digitar un Numero mayor a 1");
+                }
+            
             stop();
         } else if (strcmp(option,"2")==0){
             printf("\n\n-------------------INICIO NUMERO EGOLATRA---------------------\n\n");
@@ -485,7 +482,20 @@ void mainMenu(){
             stop();
         }
         else if (strcmp(option,"7")==0){
-            testString();
+            char cadena[50];
+      printf("PRUEBA CADENA ");  
+                printf("Digite X y O para mostrar la nota correspondiente");
+                fgets(cadena,50, stdin);
+                fflush(stdin);
+
+                if(testString(cadena)!=0){
+
+                    printf("Error Solo deve de digitar O y X en mayuscula\n");
+
+                }else{
+
+                    sumaCadena(cadena);
+                }
             stop();
         }
         else if (strcmp(option,"8")==0){
