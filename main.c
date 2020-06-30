@@ -53,7 +53,7 @@ int egomaniac(int number, int sum, int size) {
     return number > 0 ? egomaniac(number / 10, sum, size) : sum;
 }
 void egomanicNumber(){
-    char *aux, cnumber[100], fchain[1000][1000]={""},pattern[100]="";
+    char *aux, cnumber[100];
     long number;
     printf("\n\n-------------------INICIO NUMERO EGOLATRA---------------------\n\n");
     printf("Digite el numero que desea saber si es o no egolatra: ");
@@ -466,7 +466,7 @@ void runTestString(){
 
     if(testString(cadena)!=0){
 
-        printf("\nError Solo debe de digitar O y X en mayuscula\n");
+        printf("\nError Solo debe de digitar O y X en mayuscula o miniscula\n");
 
     }else{
         sumChain(cadena);
