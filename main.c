@@ -326,27 +326,44 @@ char *fibonacci(int number, char *chain) {
     number == 1 || number == 0 ? number == 1 ? strcat(chain, "1") : strcat(chain, "0") : *fibonacci(number - 1, chain) +*fibonacci(number - 2, chain);
     return chain;
 }
-void testString(){
-    char prue[] = {'O', 'O', 'X', 'X', 'O', 'X', 'X', 'O', 'O', 'O'};
-    int contador = 0;
-    int total = 0;
-    int VectorSuma[sizeof(prue) - 1];
 
-    for (int i = 0; i <= sizeof(prue) - 1; ++i) {
-        contador++;
-        if (prue[i] == 'O') {
-            VectorSuma[i] = contador;
-        } else if (prue[i] == 'X')
-            contador = 0;
-        VectorSuma[i] = contador;
+voidint testString(char cadena[]){
+    int auxi=0;
+    for (int i=0 ; i<strlen(cadena)-1; i++){
+
+        if ((cadena[i]=='X' || cadena[i]=='O') || (cadena[i]=='o' || cadena[i]=='x')){
+
+            auxi=0;
+
+        }else{
+
+            auxi=1;
+
+            break;
+        }
     }
-    for (int j = 0; j <= sizeof(prue) - 1; ++j) {
-        printf("%d ", VectorSuma[j]);
-        total = total + VectorSuma[j];
-    }
-    printf("\n------El total de la calificacion es: %d------\n", total);
-    printf("PRUEBA CADENA ");
+    return auxi;
 }
+
+void sumaCadena(char cadena[]){
+    int suma=0; 
+    int auxi=0;
+    for(int i; i<strlen(cadena); i++){
+
+        if(cadena[i]=='O' || cadena[i]=='o'){
+
+            suma++;
+
+        }else{
+
+            suma=0;
+
+        }
+        auxi=suma+auxi;
+    }
+    printf("\nLa nota del estudiante es: %d \n",auxi);
+}
+
 void stop()
 {
     printf("\nPulsa ENTER para continuar...");
@@ -374,15 +391,20 @@ void mainMenu(){
         fflush(stdin);
 
         if (strcmp(option,"1")==0){
-            int numP1;
-            printf("Digite el numero limite !\n");
-            scanf("%i", &numP1);
-            if (numP1>0){
-                primeNumbers(numP1);
-            }
-            else{
-                printf("Error tiene que Digitar un Numero mayor a 1");
-            }
+                  char cadena[50];
+      printf("PRUEBA CADENA ");  
+                printf("Digite X y O para mostrar la nota correspondiente");
+                fgets(cadena,50, stdin);
+                fflush(stdin);
+
+                if(testString(cadena)!=0){
+
+                    printf("Error Solo deve de digitar O y X en mayuscula\n");
+
+                }else{
+
+                    sumaCadena(cadena);
+                }
             stop();
         } else if (strcmp(option,"2")==0){
             printf("\n\n-------------------INICIO NUMERO EGOLATRA---------------------\n\n");
