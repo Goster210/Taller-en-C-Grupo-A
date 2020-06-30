@@ -3,7 +3,16 @@
 #include <ctype.h>
 #include <math.h>
 #include <string.h>
+////////////////////////// RUN NUMEROS PRIMOS (PUNTO 1)//////////////////////////
 
+int validatePrime(char num[]){
+    for (int a = 0; a < strlen(num); a++){
+        if(!isdigit(num[a]) ) {
+            return 0;
+        }
+    }
+    return 1;
+}
 void primeNumbers(int numeroFinal){
     int contador;
     int i;
@@ -19,16 +28,158 @@ void primeNumbers(int numeroFinal){
             contador++;
         }
         if (primo)
-            printf("%d ", i);
+            printf("------\n%d \n", i);
     }
-    printf("NUMEROS PRIMOS");
 }
-
+void limitNumber() {
+    char numP1[10];
+    printf("\n\n-------------------INICIO NUMERO PRIMO---------------------\n\n");
+    printf("Digite el numero limite !\n");
+    scanf("%s", &numP1);
+    if (validatePrime(numP1) == 1){
+        if (atof(numP1) > 0) {
+            primeNumbers(atof(numP1));
+        }
+    } else{
+        printf("\nError!!!,Porfavor Ingrese solo Numeros\n");
+    }
+    printf("\n\n-------------------FINAL NUMERO PRIMO---------------------\n\n");
+}
+////////////////////////// END NUMEROS PRIMOS (PUNTO 1)//////////////////////////
+//------------------------------------------------------------------//
+/////////////////////////////// RUN NUMERO EGOLATRA (PUNTO 2)///////////////////////
 int egomaniac(int number, int sum, int size) {
     sum += pow(number % 10, size);
     return number > 0 ? egomaniac(number / 10, sum, size) : sum;
 }
-/////////////////////////RUN  IMC/////////////////
+void egomanicNumber(){
+    char *aux, cnumber[100], fchain[1000][1000]={""},pattern[100]="";
+    long number;
+    printf("\n\n-------------------INICIO NUMERO EGOLATRA---------------------\n\n");
+    printf("Digite el numero que desea saber si es o no egolatra: ");
+    getchar();
+    if (fgets(cnumber, sizeof(cnumber), stdin)) {
+        number = strtol(cnumber, &aux,10);
+        if (aux == cnumber || *aux != '\n') {
+            printf("\nDebe digitar un numero entero positivo.\nNo se aceptan cadenas de caracteres ni numeros decimales.\n");
+        } else {
+            printf(number >= 0 ? number != egomaniac(number, 0, floor(log10(labs(number))) + 1) && number!=0
+                                 ? "\nEl numero %ld no es egolatra\n" : "\nEl numero %ld si es egolatra\n"
+                               : "\nEl numero debe ser un entero positivo\n", number);
+        }
+    }
+
+    printf("\n--------------------FIN NUMERO EGOLATRA-----------------------\n");
+}
+////////////////////////////// END NUMERO EGOLATRA (PUNTO 2)//////////////////////
+//------------------------------------------------------------------//
+///////////////////////////// RUN NUMERO MAGICO (PUNTO 3)////////////////////////
+//Validacion Ingreso de solo numeros
+int validateNumbers(char option[]){
+    for(int i=0; i<strlen(option); i++){
+        if(!isdigit(option[i])){
+            printf("\nError!!!, Ingrese solo Numeros\nVuelva a Intentarlo\n");
+            getchar();
+            return 0;
+        }
+    }
+    return 1;
+}
+int ascenOrder(int digits[], int size){
+    int auxOrder,numberAscen = 0,aux = 0;
+
+    for(int i=0;i<size;i++){
+        for(int j=0;j<size-1;j++){
+            for(int j=0;j<size-1;j++){
+                if(digits[j]>digits[j+1]){
+                    auxOrder=digits[j];
+                    digits[j]=digits[j+1];
+                    digits[j+1]=auxOrder;
+                }
+            }
+        }
+    }
+
+    for (int i = 0;i < size; i++){
+        aux = digits[i];
+
+        if (aux != 0){
+            while (aux > 0){
+                numberAscen *= 10;
+                aux /= 10;
+            }
+            numberAscen += digits[i];
+        }else{
+            numberAscen *= 10;
+        }
+    }
+    return numberAscen;
+}
+
+int descenOrder(int digits[], int size){
+    int auxOrder,numberDescen = 0,aux = 0;
+
+    for(int i=0;i<size;i++){
+        for(int j=0;j<size-1;j++){
+            for(int j=0;j<size-1;j++){
+                if(digits[j]<digits[j+1]){
+                    auxOrder=digits[j];
+                    digits[j]=digits[j+1];
+                    digits[j+1]=auxOrder;
+                }
+            }
+        }
+    }
+
+
+    for (int i = 0;i < size; i++){
+        aux = digits[i];
+
+        if (aux != 0){
+            while (aux > 0){
+                numberDescen *= 10;
+                aux /= 10;
+            }
+            numberDescen += digits[i];
+        }else{
+            numberDescen *= 10;
+        }
+    }
+    return numberDescen;
+}
+
+void magicNumber(){
+    int number,originalNumber;
+    char validate[5];
+
+    printf("\n\n-------------------INICIO NUMERO MAGICO---------------------\n\n");
+    do{
+        printf("\nIngrese el numero: " );
+        scanf("%s",validate);
+        number=validateNumbers(validate);
+    }while(number == 0);
+
+    if(number !=0 ){
+        originalNumber = atoi(validate);
+        int digits[10],aux=0,size,temp=originalNumber;
+        while(temp!=0){
+            digits[aux] = temp%10;
+            temp = temp/10;
+            aux++;
+        }
+        size = aux;
+        if( (descenOrder(digits,size) - ascenOrder(digits,size)) == originalNumber){
+            printf("El numero %i SI es Magico\n",originalNumber);
+        }else{
+            printf("El numero %i NO es Magico\n",originalNumber);
+        }
+    }
+    printf("\n\n-------------------FINAL NUMERO MAGICO---------------------\n\n");
+}
+
+//////////////////////////// END NUMERO MAGICO (PUNTO 3)////////////////////////
+//------------------------------------------------------------------//
+/////////////////////////RUN  IMC (PUNTO 4)/////////////////
 char* maleIMC(double weight,double height,double imc){
     if (imc < 17 ){
         return ("Desnutricion");
@@ -152,114 +303,9 @@ void IMC(){
     printf("------------------------------------------------------\n"
            "\n-------------------  FIN INDICE DE MASA CORPORAL (IMC) ---------------------\n\n");
 }
-/////////////////////////END  IMC/////////////////
-//////// Puntos 3 y 5
-
-//Validacion Ingreso de solo numeros
-int validateNumbers(char option[]){
-    for(int i=0; i<strlen(option); i++){
-        if(!isdigit(option[i])){
-            printf("\nError!!!, Ingrese solo Numeros\nVuelva a Intentarlo\n");
-            getchar();
-            return 0;
-        }
-    }
-    return 1;
-}
-
-//Inicio punto 3
-int ascenOrder(int digits[], int size){
-    int auxOrder,numberAscen = 0,aux = 0;
-
-    for(int i=0;i<size;i++){
-        for(int j=0;j<size-1;j++){
-            for(int j=0;j<size-1;j++){
-                if(digits[j]>digits[j+1]){
-                    auxOrder=digits[j];
-                    digits[j]=digits[j+1];
-                    digits[j+1]=auxOrder;
-                }
-            }
-        }
-    }
-
-    for (int i = 0;i < size; i++){
-        aux = digits[i];
-
-        if (aux != 0){
-            while (aux > 0){
-                numberAscen *= 10;
-                aux /= 10;
-            }
-            numberAscen += digits[i];
-        }else{
-            numberAscen *= 10;
-        }
-    }
-    return numberAscen;
-}
-
-int descenOrder(int digits[], int size){
-    int auxOrder,numberDescen = 0,aux = 0;
-
-    for(int i=0;i<size;i++){
-        for(int j=0;j<size-1;j++){
-            for(int j=0;j<size-1;j++){
-                if(digits[j]<digits[j+1]){
-                    auxOrder=digits[j];
-                    digits[j]=digits[j+1];
-                    digits[j+1]=auxOrder;
-                }
-            }
-        }
-    }
-
-
-    for (int i = 0;i < size; i++){
-        aux = digits[i];
-
-        if (aux != 0){
-            while (aux > 0){
-                numberDescen *= 10;
-                aux /= 10;
-            }
-            numberDescen += digits[i];
-        }else{
-            numberDescen *= 10;
-        }
-    }
-    return numberDescen;
-}
-
-void magicNumber(){
-    int number,originalNumber;
-    char validate[5];
-
-    printf("\n----------->  Numero Magico \n");
-    do{
-        printf("\nIngrese el numero: " );
-        scanf("%s",validate);
-        number=validateNumbers(validate);
-    }while(number == 0);
-
-    if(number !=0 ){
-        originalNumber = atoi(validate);
-        int digits[10],aux=0,size,temp=originalNumber;
-        while(temp!=0){
-            digits[aux] = temp%10;
-            temp = temp/10;
-            aux++;
-        }
-        size = aux;
-        if( (descenOrder(digits,size) - ascenOrder(digits,size)) == originalNumber){
-            printf("El numero %i SI es Magico\n",originalNumber);
-        }else{
-            printf("El numero %i NO es Magico\n",originalNumber);
-        }
-    }
-}
-//Fin Punto 3
-//Inicio Punto 5
+/////////////////////////END  IMC  (PUNTO 4)/////////////////
+//------------------------------------------------------------------//
+/////////////////////////RUN SUMA DE DIGITOS  (PUNTO 5)///////////////////////////
 int processDigiExcl(int less,int higher,int exclude,int *sumNoExcl,int *sumNumExc){
     int num=0,digito=0,contExc=0,suma=0;
 
@@ -281,11 +327,12 @@ int processDigiExcl(int less,int higher,int exclude,int *sumNoExcl,int *sumNumEx
     return 0;
 }
 
+
 void readDigits(){
     int lessVal,highVal,exclVal;
     char validLess[5],validHigher[5],validExcl[5];
 
-    printf("\n----------->  Digitos Excluidos\n");
+    printf("\n\n-------------------INICIO SUMA DE DIGITOS---------------------\n\n");
     do{
         printf("\nIngrese el MENOR numero del rango: ");
         scanf("%s",&validLess);
@@ -317,112 +364,154 @@ void readDigits(){
             printf("\nRango de Numeros [%i - %i]\t Digito A Excluir (%i)\nSuma Digitos NO EXCLUIDOS: %i, Cantidad Digitos EXCLUIDOS: %i\n",lessNumber,higherNumber,excludeNumber,sumNoExcl,sumNumExc);
         }
     }
+    printf("\n\n-------------------FINAL SUMA DE DIGITOS---------------------\n\n");
 }
-//Fin Punto 5
 
-//// Fin Puntos 3 y 5
-
+/////////////////////////END SUMA DE DIGITOS (PUNTO 5)///////////////////////////
+//------------------------------------------------------------------//
+//////////////////////////// RUN FIBONACCI (PUNTO 6) /////////////////////
 char *fibonacci(int number, char *chain) {
     number == 1 || number == 0 ? number == 1 ? strcat(chain, "1") : strcat(chain, "0") : *fibonacci(number - 1, chain) +*fibonacci(number - 2, chain);
     return chain;
 }
+void codeFibonacci(){
+    char *aux, cnumber[100], fchain[1000][1000]={""},pattern[100]="";
+    long number;
+    int isBits = 0, isBits2 = 0, cont = 0;
+    printf("\n\n-------------------INICIO FIBONACCI DE BITS---------------------\n\n");
+    printf("Digite el numero n para la serie :");
+    getchar();
+    if (fgets(cnumber, sizeof(cnumber), stdin)) {
+        number = strtol(cnumber, &aux, 10);
+        if (aux == cnumber || *aux != '\n') {
+            printf("\nDebe digitar un numero entero positivo.\nNo se aceptan cadenas de caracteres ni numeros decimales.");
+        } else {
+            if (number >= 0) {
+                printf("\nDigite el patron de bits a buscar: ");
+                scanf("%s", pattern);
+                char buffer1[100] = "";
+                char buffer2[100] = "";
+                char buffer3[100] = "";
 
-int testString(char cadena[]){
+                for (int i = 0; i < strlen(pattern); i++) {
+                    isBits += strcmp(strncpy(buffer1, &pattern[i], 1), "0") == 0 ||
+                              strcmp(strncpy(buffer1, &pattern[i], 1), "1") == 0 ? 1 : 0;
+                    isBits2 += (i + 2 <= strlen(pattern) &&
+                                strcmp(strncpy(buffer2, &pattern[i], 2), "00") == 0) ||
+                               (i + 3 <= strlen(pattern) &&
+                                strcmp(strncpy(buffer3, &pattern[i], 3), "111") == 0)
+                               ? 1 : 0;
+                }
+                if (isBits == strlen(pattern) && isBits2 == 0) {
+                    int a = strlen(fibonacci(number, fchain));
+                    int b = strlen(pattern);
+                    char buffer[100] = "";
+                    char *chain = fibonacci(number, fchain);
+                    for (int i = 0; i < a; i++) {
+                        if (i * b + b <= a && strcmp(strncpy(buffer, &chain[i * b], b), pattern) == 0) {
+                            cont++;
+                        }
+                    }
+                    printf("\nEl patrón de bits %s se encuentra %d veces en f(n) para n = %ld", pattern,cont,number);
+                } else {
+                    printf(isBits2 != 0 ? "\nEl patrón de bits %s se encuentra 0 veces en f(n) para n = %ld" : "\nEl patron digitado no corresponde a un patron de bits (0,1)", pattern, number);
+                }
+
+            } else {
+                printf("\nEl numero n debe ser positivo\n");
+            }
+        }
+    }
+    printf("\n\n-------------------FIN FIBONACCI DE BITS---------------------\n");
+}
+
+////////////////////// END FIBONACCI (PUNTO 6)/////////////////////////////
+//------------------------------------------------------------------//
+//////////////////////////// RUN TEST CADENA (PUNTO 7)/////////////////////
+int testString(char chain[]){
     int auxi=0;
-    for (int i=0 ; i<strlen(cadena)-1; i++){
-
-        if ((cadena[i]=='X' || cadena[i]=='O') || (cadena[i]=='o' || cadena[i]=='x')){
-
+    for (int i=0 ; i<strlen(chain)-1; i++){
+        if ((chain[i]=='X' || chain[i]=='O') || (chain[i]=='o' || chain[i]=='x')){
             auxi=0;
-
         }else{
-
             auxi=1;
-
             break;
         }
     }
     return auxi;
 }
 
-void sumaCadena(char cadena[]){
-    int suma=0;
-    int auxi=0;
-    for(int i=0; i<=strlen(cadena); i++){
+void sumChain(char chain[]){
+    int sum=0;
+    int counter=0;
+    for(int i = 0; i<strlen(chain); i++){
 
-        if(cadena[i]=='O' || cadena[i]=='o'){
+        if(chain[i]=='x' || chain[i]=='X'){
 
-            suma++;
-            auxi+=suma;
+            counter = 0;
 
-        }else if(cadena[i]=='X' || cadena[i]=='x'){
-
-            suma=0;
-
+        }else{
+            counter++;
+            sum+=counter;
         }
+
     }
-    printf("\nLa nota del estudiante es: %d \n",auxi);
+    printf("\nLa nota del estudiante es: %d \n",sum);
+}
+void runTestString(){
+    char cadena[50];
+    printf("\n\n-------------------INICIO PRUEBA CADENA---------------------\n\n");
+    printf("Digite X y O para mostrar la nota correspondiente: \n");
+    scanf("%s",cadena);
+
+    if(testString(cadena)!=0){
+
+        printf("\nError Solo debe de digitar O y X en mayuscula\n");
+
+    }else{
+        sumChain(cadena);
+    }
+    printf("\n\n-------------------FINAL PRUEBA CADENA---------------------\n\n");
 }
 
+//////////////////////////// END TEST CADENA (PUNTO 7)/////////////////////
+//------------------------------------------------------------------//
+//////////////////////////// RUN STOP/////////////////////
 void stop()
 {
     printf("\nPulsa ENTER para continuar...");
     getchar();
     getchar();
 }
-
+//////////////////////////// END STOP/////////////////////
+//------------------------------------------------------------------//
+//////////////////////////// RUN MENU/////////////////////
 void mainMenu(){
     int exit = 1;
     char option[10];
-    char *mainMenu = "\n<<<<MENU PRINCIPAL>>>>\n\n"
+    char *mainMenu = "\n<<<<MENU PRINCIPAL>>>>\n\nOpciones:---------------------------\n"
                      "1. Numero Primo\n"
                      "2. Numero Ególatra\n"
                      "3. Numero Magico\n"
                      "4. Indice de masa corporal (IMC)\n"
                      "5. Suma de digitos\n"
                      "6. Serie de Fibonnaci\n"
-                     "7. Test Cadena\n\n"
-                     "8. SALIR\n\n"
+                     "7. Test Cadena\n---------------------------\n"
+                     "8. SALIR\n---------------------------\n"
                      "Digite una opcion del menu: ";
 
     do{
         printf( mainMenu );
-        long number;
-        int isBits = 0, isBits2 = 0, cont = 0;
-        char *aux, cnumber[100], fchain[1000][1000]={""},pattern[100]="";
         scanf("%s",&option);
         fflush(stdin);
 
         if (strcmp(option,"1")==0){
-                  
-            int numP1;
-                printf("Digite el numero limite !\n");
-                scanf("%i", &numP1);
-                if (numP1>0){
-                    primeNumbers(numP1);
-                }
-                else{
-                    printf("Error tiene que Digitar un Numero mayor a 1");
-                }
-            
+            limitNumber();
             stop();
         } else if (strcmp(option,"2")==0){
-            printf("\n\n-------------------INICIO NUMERO EGOLATRA---------------------\n\n");
-            printf("Digite el numero que desea saber si es o no egolatra: ");
+            egomanicNumber();
+            printf("\nPulsa ENTER para continuar...");
             getchar();
-            if (fgets(cnumber, sizeof(cnumber), stdin)) {
-                number = strtol(cnumber, &aux,10);
-                if (aux == cnumber || *aux != '\n') {
-                    printf("\nDebe digitar un numero entero positivo.\nNo se aceptan cadenas de caracteres ni numeros decimales.\n");
-                } else {
-                    printf(number >= 0 ? number != egomaniac(number, 0, floor(log10(labs(number))) + 1) && number!=0
-                                         ? "\nEl numero %ld no es egolatra\n" : "\nEl numero %ld si es egolatra\n"
-                                       : "\nEl numero debe ser un entero positivo\n", number);
-                }
-            }
-
-            printf("\n--------------------FIN NUMERO EGOLATRA-----------------------\n");
-            stop();
 
         } else if (strcmp(option,"3")==0){
             magicNumber();
@@ -437,67 +526,11 @@ void mainMenu(){
             stop();
         }
         else if (strcmp(option,"6")==0){
-            printf("\n\n-------------------INICIO FIBONACCI DE BITS---------------------\n\n");
-            printf("Digite el numero n para la serie :");
-            getchar();
-            if (fgets(cnumber, sizeof(cnumber), stdin)) {
-                number = strtol(cnumber, &aux, 10);
-                if (aux == cnumber || *aux != '\n') {
-                    printf("\nDebe digitar un numero entero positivo.\nNo se aceptan cadenas de caracteres ni numeros decimales.");
-                } else {
-                    if (number >= 0) {
-                        printf("\nDigite el patron de bits a buscar: ");
-                        scanf("%s", pattern);
-                        char buffer1[100] = "";
-                        char buffer2[100] = "";
-                        char buffer3[100] = "";
-
-                        for (int i = 0; i < strlen(pattern); i++) {
-                            isBits += strcmp(strncpy(buffer1, &pattern[i], 1), "0") == 0 ||
-                                      strcmp(strncpy(buffer1, &pattern[i], 1), "1") == 0 ? 1 : 0;
-                            isBits2 += (i + 2 <= strlen(pattern) &&
-                                        strcmp(strncpy(buffer2, &pattern[i], 2), "00") == 0) ||
-                                       (i + 3 <= strlen(pattern) &&
-                                        strcmp(strncpy(buffer3, &pattern[i], 3), "111") == 0)
-                                       ? 1 : 0;
-                        }
-                        if (isBits == strlen(pattern) && isBits2 == 0) {
-                            int a = strlen(fibonacci(number, fchain));
-                            int b = strlen(pattern);
-                            char buffer[100] = "";
-                            char *chain = fibonacci(number, fchain);
-                            for (int i = 0; i < a; i++) {
-                                if (i * b + b <= a && strcmp(strncpy(buffer, &chain[i * b], b), pattern) == 0) {
-                                    cont++;
-                                }
-                            }
-                            printf("\nEl patrón de bits %s se encuentra %d veces en f(n) para n = %ld", pattern,cont,number);
-                        } else {
-                            printf(isBits2 != 0 ? "\nEl patrón de bits %s se encuentra 0 veces en f(n) para n = %ld" : "\nEl patron digitado no corresponde a un patron de bits (0,1)", pattern, number);
-                        }
-
-                    } else {
-                        printf("\nEl numero n debe ser positivo\n");
-                    }
-                }
-            }
-            printf("\n\n-------------------FIN FIBONACCI DE BITS---------------------\n");
+            codeFibonacci();
             stop();
         }
         else if (strcmp(option,"7")==0){
-            char cadena[50];
-      printf("PRUEBA CADENA ");  
-                printf("Digite X y O para mostrar la nota correspondiente");
-                scanf("%s", cadena);
-
-                if(testString(cadena)!=0){
-
-                    printf("Error Solo deve de digitar O y X en mayuscula\n");
-
-                }else{
-
-                    sumaCadena(cadena);
-                }
+            runTestString();
             stop();
         }
         else if (strcmp(option,"8")==0){
@@ -510,8 +543,11 @@ void mainMenu(){
 
     }while( exit != 0 );
 }
-
+//////////////////////////// END MENU/////////////////////////////////
+//------------------------------------------------------------------//
+//////////////////////////// RUN METODO PRINCIPAL/////////////////////
 int main() {
     mainMenu();
     return 0;
 }
+//////////////////////////// END METODO PRINCIPAL/////////////////////
